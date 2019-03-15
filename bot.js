@@ -26,62 +26,70 @@ var replacements =
     [ "I", "you" ] 
   ]  
 
+function applyReplacements(word) {
+  for(var j = 0; j < replacements.length; j++) {
+    if (word == replacements[j][0]) return replacements[j][1];
+  }
+  return word;
+}
+
 // Checks whether given words match given pattern (pi and wi are
 // indices of current position in pattern and word that we are 
 // looking at). Returns 'null' if matching fails or an array of 
 // matched word(s) that correspond to all '*' in the pattern.
-function matchPattern(p, w, pi, wi) {
-  if (pi == p.length && wi == w.length) return [];
-  if (pi == p.length) {
-        return null;
+function matchPattern(pattern, words, patternIndex, wordIndex) {
+  if (patternIndex == pattern.length && wordIndex == words.length) {
+    return [];
+  }
+  if (patternIndex == pattern.length) {
+    return null;
   } 
-  if (p[pi] == "*") {
+  if (pattern[patternIndex] == "*") {
     // Try matching '*' with anything between zero or all remaining words
-    for(var l = 0; l <= w.length-wi; l++) {
-      var res = matchPattern(p, w, pi+1, wi+l)
+    for(var l = 0; l <= words.length-wordIndex; l++) {
+      var res = matchPattern(pattern, words, patternIndex+1, wordIndex+l)
       if (res) {
         // If matching succeeded, apply replacements and add 
         // words matched against the current '*' to returned result
-        var sub = w.slice(wi, wi+l);
-        for(var i = 0; i < sub.length; i++) {
-          for(var j = 0; j < replacements.length; j++) {
-            if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
-          }
-        }
+        var sub = words.slice(wordIndex, wordIndex+l);
+        for(var i = 0; i < sub.length; i++) sub[i] = applyReplacements(sub[i]);
         return [sub.join(' ')].concat(res);      
       }
     }
     return null;
   }
-  if (wi == w.length)
+  if (wordIndex == words.length) {
     return null;
-  if (p[pi] == w[wi]) 
-  {
-      return matchPattern(p, w, pi+1, wi+1)
   }
+  if (pattern[patternIndex] == words[wordIndex]) {
+    return matchPattern(pattern, words, patternIndex+1, wordIndex+1)
+  }
+}
+
+function reply(message) {
+    // Iterate over all rules and find the first one that matches
+  var words = message.split(' ')
+  for(var i = 0; i<rules.length; i++) 
+  {
+    var match = matchPattern(rules[i].pattern, words, 0, 0)
+    if (match) {
+      // Reconstruct a reply - if a token is a number, find the
+      // matched word from 'match', otherwise just append the word
+      var res = ""
+      for(var token of rules[i].reply) {
+        if (typeof(token) == "number") res += match[token]
+          else res += token;
+      }
+      return res;
+    }
+  }
+  return "Can you tell me more about that?";
 }
 
 function saySomething() {
   var message = document.getElementById('message').value;
   var conversation = document.getElementById('conversation');
-  var answer = "Can you tell me more about that?";
-  var words = message.split(' ')
-  
-  // Iterate over all rules and find the first one that matches
-  for(var i = 0; i<rules.length; i++) 
-  {
-  var match = matchPattern(rules[i].pattern, words, 0, 0)
-  if (match) {
-  // Reconstruct a reply - if a token is a number, find the
-  // matched word from 'match', otherwise just append the word
-  var res = ""
-  for(var token of rules[i].reply) {
-    if (typeof(token) == "number") res += match[token]
-      else res += token;
-  }
-  answer = res;
-  }
-  }
+  var answer = reply(message);
   conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-    conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
 }
