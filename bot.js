@@ -33,7 +33,7 @@ var replacements =
 function matchPattern(p, w, pi, wi) {
   if (pi == p.length && wi == w.length) return [];
   if (pi == p.length) {
-    return null;
+        return null;
   } 
   if (p[pi] == "*") {
     // Try matching '*' with anything between zero or all remaining words
@@ -57,7 +57,7 @@ function matchPattern(p, w, pi, wi) {
     return null;
   if (p[pi] == w[wi]) 
   {
-    return matchPattern(p, w, pi+1, wi+1)
+      return matchPattern(p, w, pi+1, wi+1)
   }
 }
 
