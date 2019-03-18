@@ -39,15 +39,15 @@ function matchPattern(p, w, pi, wi) {
     // Try matching '*' with anything between zero or all remaining words
     for(var l = 0; l <= w.length-wi; l++) {
       var res = matchPattern(p, w, pi+1, wi+l);
-      if (res) {
+		if (res) {
         // If matching succeeded, apply replacements and add 
         // words matched against the current '*' to returned result
-        var sub = w.slice(wi, wi+l);
-        for(var i = 0; i < sub.length; i++) {
-          for(var j = 0; j < replacements.length; j++) {
-            if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
-          }
-        }
+			var sub = w.slice(wi, wi+l);
+			for(var i = 0; i < sub.length; i++) {
+				for(var j = 0; j < replacements.length; j++) {
+					if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
+				}
+			}
         return [sub.join(' ')].concat(res);      
       }
     }
