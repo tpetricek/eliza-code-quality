@@ -37,7 +37,7 @@ function matchPattern(pattern, words, patternIndex, wordIndex) {
   } 
   if (pattern[patternIndex] == "*") {
     // Try matching '*' with anything between zero or all remaining words
-    for(var l = 0; l <= words.length-wi; l++) {
+    for(var l = 0; l <= words.length-wordIndex; l++) {
       var res = matchPattern(pattern, words, patternIndex+1, wordIndex+l)
       if (res) {
         // If matching succeeded, apply replacements and add 
