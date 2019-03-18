@@ -23,28 +23,28 @@ var replacements =
 		[ "My", "your"],
 		[ "me", "you" ],
 		[ "Me", "you" ],
-		[ "I", "you" ] 
+		[ "I", "you" ]
 	]  
 
-// Checks whether given words match given pattern (pi and wi are
+// Checks whether given words match given pattern (pIndex and wi are
 // indices of current position in pattern and word that we are 
 // looking at). Returns 'null' if matching fails or an array of 
 // matched word(s) that correspond to all '*' in the pattern.
-function matchPattern(p, w, pi, wi){
-	if (pi == p.length && wi == w.length) return [];
+function matchPattern(pattern, words, pIndex, wIndex){
+	if (pIndex == pattern.length && wIndex == words.length) return [];
 	
-	if (pi == p.length){
+	if (pIndex == pattern.length){
 		return null;
 	}
 	
-	if (p[pi] == "*"){
+	if (pattern[pIndex] == "*"){
 		// Try matching '*' with anything between zero or all remaining words
-		for(var l = 0; l <= w.length-wi; l++){
-			var res = matchPattern(p, w, pi+1, wi+l)
+		for(var l = 0; l <= words.length-wIndex; l++){
+			var res = matchPattern(pattern, words, pIndex+1, wIndex+l)
 			if (res){
 				// If matching succeeded, apply replacements and add 
 				// words matched against the current '*' to returned result
-				var sub = w.slice(wi, wi+l);
+				var sub = words.slice(wIndex, wIndex+l);
 				for(var i = 0; i < sub.length; i++){
 					for(var j = 0; j < replacements.length; j++){
 						if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
@@ -56,11 +56,11 @@ function matchPattern(p, w, pi, wi){
 		return null;
 	}
   
-	if (wi == w.length)
+	if (wIndex == words.length)
 		return null;
 
-	if (p[pi] == w[wi]){
-		return matchPattern(p, w, pi+1, wi+1)
+	if (pattern[pIndex] == words[wIndex]){
+		return matchPattern(pattern, words, pIndex+1, wIndex+1)
 	}
 }
 
