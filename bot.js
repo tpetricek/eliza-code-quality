@@ -43,11 +43,7 @@ function matchPattern(pattern, words, PatternIndex, WordIndex) {
         // If matching succeeded, apply replacements and add 
         // words matched against the current '*' to returned result
         var sub = words.slice(WordIndex, WordIndex+l);
-        for(var i = 0; i < sub.length; i++) {
-          for(var j = 0; j < replacements.length; j++) {
-            if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
-			}
-		}
+        sub=applyReplacements(sub);
       return [sub.join(' ')].concat(res);}}
     return null;
 	}
@@ -58,6 +54,16 @@ function matchPattern(pattern, words, PatternIndex, WordIndex) {
     }
   }
 
+function applyReplacements(sub){
+	for(var i = 0; i < sub.length; i++) {
+        for(var j = 0; j < replacements.length; j++) {
+            if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
+			}
+		}
+  return sub;	
+}
+  
+  
 function saySomething() {
   var message = document.getElementById('message').value;
   var conversation = document.getElementById('conversation');
