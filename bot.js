@@ -68,7 +68,7 @@ function matchPattern(p, w, pi, wi){
 function saySomething() {
 	var message = document.getElementById('message').value;
 	var conversation = document.getElementById('conversation');
-	var answer = reply(message);
+	var answer = "Can you tell me more about that?";
 	var words = message.split(' ')
   
 	// Iterate over all rules and find the first one that matches
