@@ -65,7 +65,12 @@ function applyReplacements(word) {
 function saySomething() {
   var message = document.getElementById('message').value;
   var conversation = document.getElementById('conversation');
-  var answer = "Can you tell me more about that?";
+  var answer = reply(message)
+  conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+}
+
+function reply(message) {
   var words = message.split(' ')
   
   // Iterate over all rules and find the first one that matches
@@ -79,9 +84,8 @@ function saySomething() {
         if (typeof(token) == "number") response += match[token]
         else response += token;
       }
-      answer = response;
+      return response;
     }
   }
-  conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+  return "Can you tell me more about that?";
 }
