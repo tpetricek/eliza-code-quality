@@ -32,9 +32,7 @@ var replacements =
 // matched word(s) that correspond to all '*' in the pattern.
 function matchPattern(p, w, pi, wi) {
   if (pi == p.length && wi == w.length) return [];
-  if (pi == p.length) {
-	return null;
-  } 
+  if (pi == p.length) return null; 
   if (p[pi] == "*") {
     // Try matching '*' with anything between zero or all remaining words
     for(var l = 0; l <= w.length-wi; l++) {
