@@ -33,7 +33,7 @@ var replacements =
 function matchPattern(p, w, pi, wi) {
   if (pi == p.length && wi == w.length) return [];
   if (pi == p.length) {
-        return null;
+	return null;
   } 
   if (p[pi] == "*") {
     // Try matching '*' with anything between zero or all remaining words
@@ -48,16 +48,14 @@ function matchPattern(p, w, pi, wi) {
             if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
           }
         }
-        return [sub.join(' ')].concat(res);      
+		return [sub.join(' ')].concat(res);      
       }
     }
-    return null;
+	return null;
   }
-  if (wi == w.length)
-    return null;
-  if (p[pi] == w[wi]) 
-  {
-      return matchPattern(p, w, pi+1, wi+1)
+  if (wi == w.length) return null;
+  if (p[pi] == w[wi]) {
+    return matchPattern(p, w, pi+1, wi+1)
   }
 }
 
@@ -68,20 +66,19 @@ function saySomething() {
   var words = message.split(' ')
   
   // Iterate over all rules and find the first one that matches
-  for(var i = 0; i<rules.length; i++) 
-  {
-  var match = matchPattern(rules[i].pattern, words, 0, 0)
-  if (match) {
-  // Reconstruct a reply - if a token is a number, find the
-  // matched word from 'match', otherwise just append the word
-  var res = ""
-  for(var token of rules[i].reply) {
-    if (typeof(token) == "number") res += match[token]
-      else res += token;
-  }
-  answer = res;
-  }
+  for(var i = 0; i<rules.length; i++) {
+	var match = matchPattern(rules[i].pattern, words, 0, 0)
+	if (match) {
+		// Reconstruct a reply - if a token is a number, find the
+		// matched word from 'match', otherwise just append the word
+		var res = ""
+		for(var token of rules[i].reply) {
+			if (typeof(token) == "number") res += match[token]
+			else res += token;
+		}	
+		answer = res;
+	}
   }
   conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-    conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
 }
