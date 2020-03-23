@@ -69,29 +69,35 @@ function matchPattern(p, w, pi, wi) {
 function saySomething() {
   var message = document.getElementById('message').value;
   var conversation = document.getElementById('conversation');
-  var answer = "Can you tell me more about that?";
-  var words = message.split(' ')
+  reply(message);
+}
+
   
-  // Iterate over all rules and find the first one that matches
-  for (var i = 0; i<rules.length; i++) 
-  {
-  	var match = matchPattern(rules[i].pattern, words, 0, 0);
-  	if (match) {
-  	// Reconstruct a reply - if a token is a number, find the
-  	// matched word from 'match', otherwise just append the word
-  		var res = ""
-  		for(var token of rules[i].reply) {
-    		if (typeof(token) == "number")
-    		{
-    			res += match[token]
-    		} 
-      		else {
-      			res += token;
-			}  
-  		}
-  		answer = res;
-  	}
-  }
-  conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+
+
+function reply(message) {
+	var answer = "Can you tell me more about that?";
+	var words = message.split(' ');
+	// Iterate over all rules and find the first one that matches
+	for (var i = 0; i<rules.length; i++) 
+  	{
+	  	var match = matchPattern(rules[i].pattern, words, 0, 0);
+	  	if (match) {
+	  	// Reconstruct a reply - if a token is a number, find the
+	  	// matched word from 'match', otherwise just append the word
+	  		var res = ""
+	  		for(var token of rules[i].reply) {
+	    		if (typeof(token) == "number")
+	    		{
+	    			res += match[token]
+	    		} 
+	      		else {
+	      			res += token;
+				}  
+	  		}
+	  		answer = res;
+	  	}
+	  }
+	  conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+	  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
 }
