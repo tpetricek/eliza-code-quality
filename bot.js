@@ -46,10 +46,7 @@ function matchPattern(pattern, words, patternIndex, wordIndex) {
         var sub = words.slice(wordIndex, wordIndex+l);
         for (var i = 0; i < sub.length; i++) 
         {
-          for (var j = 0; j < replacements.length; j++) 
-          {
-            if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
-          }
+          sub[i] = applyReplacements(sub[i]);
         }
         return [sub.join(' ')].concat(res);      
       }
@@ -100,4 +97,15 @@ function reply(message) {
 	  }
 	  conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
 	  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+}
+
+function applyReplacements(substitution) {
+	for (var j = 0; j < replacements.length; j++) 
+    {
+        if (substitution == replacements[j][0]) 
+        {
+        	return replacements[j][1];
+    	}
+    }
+    return substitution;
 }
