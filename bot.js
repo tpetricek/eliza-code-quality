@@ -64,6 +64,15 @@ function matchPattern(p, w, pi, wi) {
 function saySomething() {
 	var message = document.getElementById('message').value;
 	var conversation = document.getElementById('conversation');
+
+	answer = reply(message);
+
+	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+	conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+}
+
+function reply(message) {
+
 	var answer = "Can you tell me more about that?";
 	var words = message.split(' ')
 
@@ -82,6 +91,7 @@ function saySomething() {
 			answer = res;
 		}
 	}
-	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-	conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+
+	return answer;
+
 }
