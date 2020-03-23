@@ -37,14 +37,17 @@ function matchPattern(p, w, pi, wi) {
   } 
   if (p[pi] == "*") {
     // Try matching '*' with anything between zero or all remaining words
-    for(var l = 0; l <= w.length-wi; l++) {
-      var res = matchPattern(p, w, pi+1, wi+l)
+    for (var l = 0; l <= w.length-wi; l++) 
+    {
+      var res = matchPattern(p, w, pi+1, wi+l);
       if (res) {
         // If matching succeeded, apply replacements and add 
         // words matched against the current '*' to returned result
         var sub = w.slice(wi, wi+l);
-        for(var i = 0; i < sub.length; i++) {
-          for(var j = 0; j < replacements.length; j++) {
+        for (var i = 0; i < sub.length; i++) 
+        {
+          for (var j = 0; j < replacements.length; j++) 
+          {
             if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
           }
         }
@@ -54,7 +57,9 @@ function matchPattern(p, w, pi, wi) {
     return null;
   }
   if (wi == w.length)
-    return null;
+  {
+  	 return null;
+  }
   if (p[pi] == w[wi]) 
   {
       return matchPattern(p, w, pi+1, wi+1)
@@ -68,20 +73,25 @@ function saySomething() {
   var words = message.split(' ')
   
   // Iterate over all rules and find the first one that matches
-  for(var i = 0; i<rules.length; i++) 
+  for (var i = 0; i<rules.length; i++) 
   {
-  var match = matchPattern(rules[i].pattern, words, 0, 0)
-  if (match) {
-  // Reconstruct a reply - if a token is a number, find the
-  // matched word from 'match', otherwise just append the word
-  var res = ""
-  for(var token of rules[i].reply) {
-    if (typeof(token) == "number") res += match[token]
-      else res += token;
-  }
-  answer = res;
-  }
+  	var match = matchPattern(rules[i].pattern, words, 0, 0);
+  	if (match) {
+  	// Reconstruct a reply - if a token is a number, find the
+  	// matched word from 'match', otherwise just append the word
+  		var res = ""
+  		for(var token of rules[i].reply) {
+    		if (typeof(token) == "number")
+    		{
+    			res += match[token]
+    		} 
+      		else {
+      			res += token;
+			}  
+  		}
+  		answer = res;
+  	}
   }
   conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-    conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+  conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
 }
