@@ -26,38 +26,41 @@ var replacements =
 		[ "I", "you" ] 
 	]  
 
-// Checks whether given words match given pattern (pi and wi are
+// Checks whether given words match given pattern (patternIndex and wordIndex are
 // indices of current position in pattern and word that we are 
 // looking at). Returns 'null' if matching fails or an array of 
 // matched word(s) that correspond to all '*' in the pattern.
-function matchPattern(p, w, pi, wi) {
-	if (pi == p.length && wi == w.length) return [];
-	if (pi == p.length) {
+//
+// @param pattern to match, e.g. [ "*", "I", "am", "*"]
+// @param words Array of user-inputed words, e.g ["I", "am", "happy"] 
+function matchPattern(pattern, words, patternIndex, wordIndex) {
+	if (patternIndex == pattern.length && wordIndex == words.length) return [];
+	if (patternIndex == pattern.length) {
 		return null;
 	} 
-	if (p[pi] == "*") {
-		// Try matching '*' with anything between zero or all remaining words
-		for(var l = 0; l <= w.length-wi; l++) {
-			var res = matchPattern(p, w, pi+1, wi+l)
-			if (res) {
+	if (pattern[patternIndex] == "*") {
+		// Try matching '*' wordIndexth anything between zero or all remaining words
+		for(var l = 0; l <= words.length-wordIndex; l++) {
+			var match = matchPattern(pattern, words, patternIndex+1, wordIndex+l)
+			if (match) {
 				// If matching succeeded, apply replacements and add 
 				// words matched against the current '*' to returned result
-				var sub = w.slice(wi, wi+l);
+				var sub = words.slice(wordIndex, wordIndex+l);
 				for(var i = 0; i < sub.length; i++) {
 					for(var j = 0; j < replacements.length; j++) {
 						if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
 					}
 				}
-				return [sub.join(' ')].concat(res);      
+				return [sub.join(' ')].concat(match);      
 			}
 		}
 		return null;
 	}
-	if (wi == w.length)
+	if (wordIndex == words.length)
 		return null;
-	if (p[pi] == w[wi]) 
+	if (pattern[patternIndex] == words[wordIndex]) 
 	{
-		return matchPattern(p, w, pi+1, wi+1)
+		return matchPattern(pattern, words, patternIndex+1, wordIndex+1)
 	}
 }
 
@@ -82,7 +85,7 @@ function reply(message) {
 		var match = matchPattern(rules[i].pattern, words, 0, 0)
 		if (match) {
 			// Reconstruct a reply - if a token is a number, find the
-			// matched word from 'match', otherwise just append the word
+			// matched word from 'match', otherwordIndexse just append the word
 			var res = ""
 			for(var token of rules[i].reply) {
 				if (typeof(token) == "number") res += match[token]
