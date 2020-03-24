@@ -38,8 +38,7 @@ function matchPattern(p, w, pi, wi) {
 		return null;
 	}
 	if (p[pi] == "*") {
-		// Try matching '*' with anything between zero or all remaining words
-		
+		// Try matching '*' with anything between zero or all remaining words		
 		for(var l = 0; l <= w.length-wi; l++) {
 			var res = matchPattern(p, w, pi+1, wi+l);
 			if (res) {
@@ -68,8 +67,14 @@ function matchPattern(p, w, pi, wi) {
 
 function saySomething() {
 	var message = document.getElementById('message').value;
-	var conversation = document.getElementById('conversation');
-	var answer = "Can you tell me more about that?";
+	var answer = reply(message);	
+	var conversation = document.getElementById('conversation');	
+	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+	conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+}
+
+function reply(message) {
+	var reply = "Can you tell me more about that?";	
 	var words = message.split(' ');
 	// Iterate over all rules and find the first one that matches
 	for(var i = 0; i<rules.length; i++) {
@@ -84,9 +89,8 @@ function saySomething() {
 				}
 				else res += token;
 			}
-			answer = res;
+			reply = res;
 		}
-	}
-	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-	conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+	}	
+	return reply;
 }
