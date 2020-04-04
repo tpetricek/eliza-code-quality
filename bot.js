@@ -1,4 +1,4 @@
-//testing
+//testing 2
 
 // A list of rules. Each rule is defined by a pattern consisting of
 // words or '*' and a reply which contains words or indices (starting
