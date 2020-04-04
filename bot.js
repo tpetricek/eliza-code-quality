@@ -32,6 +32,11 @@ var replacements =
 // indices of current position in pattern and word that we are
 // looking at). Returns 'null' if matching fails or an array of
 // matched word(s) that correspond to all '*' in the pattern.
+
+function message(reply) {
+  return answer;
+}
+
 function matchPattern(p, w, pi, wi) {
   if (pi == p.length && wi == w.length) return [];
 
