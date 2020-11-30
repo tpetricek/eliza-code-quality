@@ -77,13 +77,13 @@ function matchPattern(pattern, words, patternIndex, wordIndex) {
 
 function saySomething() {
 	var message = document.getElementById('message').value;
-	var answer = reply(message);
+	var answer = myReply(message);
 	var conversation = document.getElementById('conversation');
 	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
 	conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
 }
 
-function reply(message) {
+function myReply(message) {
 	var reply = "Can you tell me more about that?";
 	var words = message.split(' ');
 	// Iterate over all rules and find the first one that matches
