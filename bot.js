@@ -1,3 +1,7 @@
+//@author Tomas Petricek
+//@edited by Caleb Scotson Pike
+//@last modified 2020.12.09
+
 // A list of rules. Each rule is defined by a pattern consisting of
 // words or '*' and a reply which contains words or indices (starting
 // from zero) that refer to matched '*' word lists in the pattern.
