@@ -92,6 +92,9 @@ function myReply(message) {
 	var reply = "Can you tell me more about that?";
 	var words = message.split(' ');
 	// Iterate over all rules and find the first one that matches
+	if (message == "") {
+		reply = "You're being awfully quiet. Is something wrong?";
+	}
 	for (var i = 0; i < rules.length; i++) {
 		var match = matchPattern(rules[i].pattern, words, 0, 0);
 		if (match) {
@@ -108,6 +111,11 @@ function myReply(message) {
 		}
 	}
 	return reply;
+}
+
+function scrollToBottom() {
+	var chatWindow = document.getElementById('chat-window');
+	chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 var enterClick = document.getElementById("message");

@@ -13,6 +13,12 @@
     p {
       font-size: 120%;
     }
+
+    #chat-window {
+      height: 50vh;
+      width: 100%;
+      overflow: auto;
+    }
   </style>
 </head>
 
@@ -28,9 +34,13 @@
       <div clss="col-sm-12">
         <h1><strong>ELIZA</strong>: Rogerian psychotherapist from 1960s</h1>
         <br />
-        <div id="conversation">
-          <p><strong>Eliza:</strong> Is something troubling you?</p>
+
+        <div id="chat-window">
+          <div id="conversation">
+            <p><strong>Eliza:</strong> Is something troubling you?</p>
+          </div>
         </div>
+
         <br />
         <div class="form-group row">
           <div class="col-sm-6">
