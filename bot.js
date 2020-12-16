@@ -1,6 +1,6 @@
 //@author Tomas Petricek
 //@edited by Caleb Scotson Pike
-//@last modified 2020.12.09
+//@last modified 2020.12.16
 
 // A list of rules. Each rule is defined by a pattern consisting of
 // words or '*' and a reply which contains words or indices (starting
@@ -85,6 +85,7 @@ function saySomething() {
 	var conversation = document.getElementById('conversation');
 	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
 	conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+	scrollToBottom();
 	document.getElementById("message").value = '';
 }
 
