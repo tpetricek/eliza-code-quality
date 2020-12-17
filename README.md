@@ -4,7 +4,7 @@ README for eliza-code-quality
 
 @author Tomas Petricek
 @edited by Caleb Scotson Pike
-@last modified 2020-12-10
+@last modified 2020-12-17
 
 Rogerian psychotherapist from the 1960s.
 For a software engineering class.
