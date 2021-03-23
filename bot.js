@@ -55,7 +55,7 @@ function matchPattern(pattern, words, patternIndex, wordIndex) {
         // words matched against the current '*' to returned result
         var sub = words.slice(wordIndex, wordIndex+l);
         for(var i = 0; i < sub.length; i++) {
-          
+          sub[i] = applyReplacements(sub[i])
         }
         return [sub.join(' ')].concat(res);
       }
