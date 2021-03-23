@@ -70,12 +70,7 @@ function matchPattern(p, w, pi, wi) {
     }
 }
 
-function saySomething() {
-    var message = document.getElementById('message').value;
-    var conversation = document.getElementById('conversation');
-    var answer = "Can you tell me more about that?";
-    var words = message.split(' ')
-
+function getAnswer(words) {
     // Iterate over all rules and find the first one that matches
     for (var i = 0; i < rules.length; i++) {
         var match = matchPattern(rules[i].pattern, words, 0, 0)
@@ -87,9 +82,18 @@ function saySomething() {
                 if (typeof (token) == "number") res += match[token]
                 else res += token;
             }
-            answer = res;
+            return res;
         }
     }
+    return "Can you tell me more about that?";
+}
+
+function saySomething() {
+    var message = document.getElementById('message').value;
+    var conversation = document.getElementById('conversation');
+    var words = message.split(' ');
+    var botAnswer = getAnswer(words);
+    
     conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-    conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+    conversation.innerHTML += "<p><strong>Eliza:</strong> " + botAnswer + "</p>";
 }
