@@ -36,23 +36,23 @@ var replacements =
     ["I", "you"]
   ]
 
-// Checks whether given words match given pattern (patternIndex and wordIndex are
+// Checks whether given words match given pattern (pIndex and wi are
 // indices of current position in pattern and word that we are 
 // looking at). Returns 'null' if matching fails or an array of 
 // matched word(s) that correspond to all '*' in the pattern.
-function matchPattern(pattern, word, patternIndex, wordIndex) {
-  if (patternIndex == pattern.length && wordIndex == word.length) return [];
-  if (patternIndex == pattern.length) {
+function matchPattern(pattern, word, pIndex, wIndex) {
+  if (pIndex == pattern.length && wIndex == word.length) return [];
+  if (pIndex == pattern.length) {
     return null;
   }
-  if (pattern[patternIndex] == "*") {
+  if (pattern[pIndex] == "*") {
     // Try matching '*' with anything between zero or all remaining words
-    for (var l = 0; l <= word.length - wordIndex; l++) {
-      var res = matchPattern(pattern, word, patternIndex + 1, wordIndex + l)
+    for (var l = 0; l <= word.length - wIndex; l++) {
+      var res = matchPattern(pattern, word, pIndex + 1, wIndex + l)
       if (res) {
         // If matching succeeded, apply replacements and add 
         // words matched against the current '*' to returned result
-        var sub = word.slice(wordIndex, wordIndex + l);
+        var sub = word.slice(wIndex, wIndex + l);
         for (var i = 0; i < sub.length; i++) {
           for (var j = 0; j < replacements.length; j++) {
             if (sub[i] == replacements[j][0]) sub[i] = replacements[j][1];
@@ -63,10 +63,10 @@ function matchPattern(pattern, word, patternIndex, wordIndex) {
     }
     return null;
   }
-  if (wordIndex == word.length)
+  if (wIndex == word.length)
     return null;
-  if (pattern[patternIndex] == word[wordIndex]) {
-    return matchPattern(pattern, word, patternIndex + 1, wordIndex + 1)
+  if (pattern[pIndex] == word[wordIndex]) {
+    return matchPattern(pattern, word, pIndex + 1, wIndex + 1)
   }
 }
 
