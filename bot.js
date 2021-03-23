@@ -1,9 +1,7 @@
 // A list of rules. Each rule is defined by a pattern consisting of
 // words or '*' and a reply which contains words or indices (starting
 // from zero) that refer to matched '*' word lists in the pattern.
-var rules = 
-  [ 
-    { "pattern": [ "*", "I", "am", "*" ],
+var rules= [ { "pattern": [ "*", "I", "am", "*" ],
       "reply": [ "Can you explain what made you ", 1, "?" ] },
     { "pattern": [ "*", "I", "remember", "*" ],
       "reply": [ "What made you think about ", 1, "?" ] },
@@ -12,19 +10,16 @@ var rules =
     { "pattern": [ "*", "mother", "*" ],
       "reply": [ "Tell me more about your family." ] },
     { "pattern": [ "*", "father", "*" ],
-      "reply": [ "Tell me more about your family." ] },
-  ]
+      "reply": [ "Tell me more about your family." ] },]
 
 // Some words need to be replaced when recomposing the reply so that
 // "I remember my dog" -> "What made you think about *your* dog?"
-var replacements = 
-  [ 
+var replacements = [ 
     [ "my", "your"],
     [ "My", "your"],
     [ "me", "you" ],
     [ "Me", "you" ],
-    [ "I", "you" ] 
-  ]  
+    [ "I", "you"], ]  
 
 // Checks whether given words match given pattern (pi and wi are
 // indices of current position in pattern and word that we are 
@@ -66,7 +61,6 @@ function saySomething() {
   var conversation = document.getElementById('conversation');
   var answer = "Can you tell me more about that?";
   var words = message.split(' ')
-  
   // Iterate over all rules and find the first one that matches
   for(var i = 0; i<rules.length; i++) 
   {
